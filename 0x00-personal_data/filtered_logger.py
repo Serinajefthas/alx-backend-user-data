@@ -10,7 +10,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     """Returns manipulated log msg passed to it using regex"""
     for field in fields:
         msg = re.sub(f'{field}=(.*?){separator}',
-                         f'{field}={redaction}{separator}', msg)
+                     f'{field}={redaction}{separator}', msg)
     return msg
 
 
@@ -29,6 +29,15 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """returns filtered values from log records"""
         formatted_msg = super().format(record)
-        for field in self.fields
+        for field in self.fields:
             formatted_msg = self.filter_datum(field, formatted_msg)
         return formatted_msg
+
+
+def filter_datum(fields: List[str], redaction: str,
+                 msg: str, separator: str) -> str:
+    """Returns manipulated log msg passed to it using regex"""
+    for field in fields:
+        msg = re.sub(f'{field}=(.*?){separator}',
+                     f'{field}={redaction}{separator}', msg)
+    return msg
