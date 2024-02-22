@@ -53,13 +53,13 @@ class DB:
         session = self._session
         try:
             user = session.query(User).filter_by(**kwargs).one()
-            if user is None:
-                raise NoResultFound("Not found")
-            return user
-        except InvalidRequestError as e:
-            raise InvalidRequestError("Invalid") from e
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()    
+        return user
 
-    def update_user(self, user_id: int, **kwargs: dict[str, str]) -> None:
+    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
         """updates user's attributes w user id and arbitary keywords"""
         try:
             user = self.find_user_by(id=user_id)
