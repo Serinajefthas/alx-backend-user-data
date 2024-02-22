@@ -56,7 +56,7 @@ class DB:
         except NoResultFound:
             raise NoResultFound()
         except InvalidRequestError:
-            raise InvalidRequestError()    
+            raise InvalidRequestError()
         return user
 
     def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
@@ -64,7 +64,7 @@ class DB:
         try:
             user = self.find_user_by(id=user_id)
         except NoResultFound:
-            raise NoResultFound(f"No user found with id {user_id}")
+            raise ValueError(f"No user found with id {user_id}")
 
         for key, value in kwargs.items():
             if hasattr(User, key):

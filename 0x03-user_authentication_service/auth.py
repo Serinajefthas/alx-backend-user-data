@@ -10,6 +10,8 @@ from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
 
+logging.disable(logging.WARNING)
+
 
 def _hash_password(password: str) -> bytes:
     """encryptes password to hash it"""
@@ -23,6 +25,7 @@ def _generate_uuid() -> str:
 
 class Auth:
     """auth model to interact w authentication db"""
+
     def __init__(self):
         self._db = DB()
 
